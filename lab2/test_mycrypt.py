@@ -51,6 +51,7 @@ def test_invalid_types(invalid_input):
 
 
 
+
 def test_timing():
     '''Test whether encoding runs in approximately constant time, repetitions
     kept low to make test fast, use smallest measured time.
