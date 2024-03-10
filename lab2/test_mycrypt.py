@@ -11,6 +11,7 @@ tr 'A-Za-z0-9=!"#€%&/()' 'n-za-mN-ZA-M=!"#€%&/()0-9'
 If characters outside allowed ones are used as input, raise ValueError.
 '''
 
+
 import timeit
 import pytest
 import mycrypt
@@ -42,11 +43,12 @@ def test_invalid_char(invalid_input):
         mycrypt.encode(invalid_input)
 
 
-@pytest.mark.parametrize("invalid_input", [])
+@pytest.mark.parametrize("invalid_input", [float, int, bool])
 def test_invalid_types(invalid_input):
     '''Invalid parameter types should raise TypeError'''
     with pytest.raises(TypeError):
         mycrypt.encode(invalid_input)
+
 
 
 def test_timing():
@@ -63,3 +65,10 @@ def test_timing():
     timing2 = min(timeit.repeat('mycrypt.encode("a"*1000)',
                                 'import mycrypt', repeat=3, number=30))
     assert 0.95 * timing2 < timing1 < 1.05 * timing2
+    
+
+def test_len():
+    '''Tests the length of string'''
+    with pytest.raises(ValueError):
+        toolongstr = "a" * 1001
+        mycrypt.encode(toolongstr)
